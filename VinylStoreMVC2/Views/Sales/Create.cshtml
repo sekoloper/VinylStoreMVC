@@ -1,0 +1,85 @@
+﻿@model VinylStoreMVC.Models.Sale
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Добавление продажи</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InvoiceLink" class="control-label"></label>
+                <input asp-for="InvoiceLink" class="form-control" />
+                <span asp-validation-for="InvoiceLink" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Пластинки</label>
+                <select name="selectedRecords" id="recordSelect" class="form-control" multiple
+                        asp-items="ViewBag.RecordIds">
+                </select>
+                <small class="form-text text-muted">
+                    Чтобы выбрать несколько пластинок, удерживайте Ctrl
+                </small>
+            </div>
+
+            <div id="quantityFields" class="form-group">
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Вернуться к списку</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            function updateQuantityFields() {
+                var selectedIds = $('#recordSelect').val();
+                var container = $('#quantityFields');
+                container.empty();
+
+                if (selectedIds) {
+                    selectedIds.forEach(function(id) {
+                        var label = $('#recordSelect option[value="' + id + '"]').text();
+                        var fieldName = 'recordQuantities[' + id + ']';
+
+                        container.append(
+                            '<div class="card mb-3">' +
+                            '<div class="card-body">' +
+                            '<h6 class="card-title">' + label + '</h6>' +
+                            '<div class="form-group">' +
+                            '<label for="' + fieldName + '" class="control-label">Количество</label>' +
+                            '<input type="number" name="' + fieldName + '" class="form-control" value="1" min="1" required />' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                    });
+                }
+            }
+
+            $('#recordSelect').change(updateQuantityFields);
+            updateQuantityFields();
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
