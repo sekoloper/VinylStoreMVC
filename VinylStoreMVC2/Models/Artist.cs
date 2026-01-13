@@ -32,7 +32,7 @@ namespace VinylStoreMVC.Models
         /// Задаёт коллекцию виниловых пластинок, принадлежащих данному исполнителю.
         /// Представляет навигационное свойство для связи один-ко-многим с сущностью Record.
         /// </summary>
-        /// <value>Список объектов <see cref="Record"/>, связанных с данным артистом.</value>
+        /// <value>Список объектов <see cref="Record"/>, связанных с данным исполнителем.</value>
         [NotMapped]
         public List<Record> Records { get; set; } = new();
     }

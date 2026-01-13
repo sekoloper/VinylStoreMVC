@@ -33,7 +33,7 @@ namespace VinylStoreMVC.Models
         /// <summary>
         /// Задаёт id исполнителя, связанного с пластинкой.
         /// </summary>
-        /// <value>Целочисленный идентификатор артиста.</value>
+        /// <value>Целочисленный идентификатор исполнителя.</value>
         [Column("artist_id")]
         [Required]
         [Display(Name = "Исполнитель")]
